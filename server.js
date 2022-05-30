@@ -9,11 +9,6 @@ app.use(express.urlencoded({extended:true}));
 app.use(cors());
 
 app.use('/',router);
-console.log(process.env.PORT)
-
-//connect database with mongoose 
-/* mongodb+srv://Baqir:NB8Cwp4JAdXERMHl@cluster0.f4rcm.mongodb.net/hotelBooking */
-/*mongodb+srv://Baqir:NB8Cwp4JAdXERMHl@cluster0.f4rcm.mongodb.net/?retryWrites=true&w=majority  */
 mongoose.connect('mongodb+srv://Baqir:NB8Cwp4JAdXERMHl@cluster0.f4rcm.mongodb.net/hotelBooking',
 {useNewUrlParser:true,useUnifiedTopology:true})
 
