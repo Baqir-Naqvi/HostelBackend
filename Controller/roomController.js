@@ -1,6 +1,6 @@
 import Room from '../Model/mongoose.js';
-
-
+import fs from 'fs';
+const path = "public/roomimages/";
 export const homepage=(req,res)=>{
     res.send('Welcome to Homepage');
 }
@@ -28,14 +28,16 @@ export const getrooombyid=async (req,res)=>{
 export const addroom=(req,res)=>{
     const room=new Room(
         {
-            roomdescription:req.body.roomdescription,
+        roomdescription:req.body.roomdescription,
         roomno:req.body.roomno,
         floorno:req.body.floorno,
         roomtype:req.body.roomtype,
         roomcapacity:req.body.roomcapacity,
         roomstatus:req.body.roomcapacity,
         roomprice:req.body.roomprice,
-        ac:req.body.ac
+        ac:req.body.ac,
+        image:req.file ? req.file.filename : req.body.image,
+        
         }
     )
     room.save().then(
@@ -50,7 +52,7 @@ export const addroom=(req,res)=>{
 
 
 export const updateroom=(req,res)=>{
-    const id=req.params.id;
+    const id=req.query.id;
     const updateroom=
         {
         roomdescription:req.body.roomdescription,
@@ -60,6 +62,7 @@ export const updateroom=(req,res)=>{
         roomcapacity:req.body.roomcapacity,
         roomstatus:req.body.roomcapacity,
         roomprice:req.body.roomprice,
+        image:req.file ? req.file.filename : req.body.image,
         }
     Room.findByIdAndUpdate(id,updateroom,{new:true}).then(
         (result)=>{
@@ -70,11 +73,14 @@ export const updateroom=(req,res)=>{
             res.json({message:error});
         }
     )
+        req.file?fs.unlink(path+req.query.image,(err)=>{
+            if(err) throw err;
+        }):null;
 
 }
 
 export const deleteroom=(req,res)=>{
-    const id=req.params.id;
+    const id=req.query.id;
     Room.findByIdAndDelete(id).then(
         (result)=>{
             res.json({message:'Room deleted successfully'});
@@ -83,5 +89,6 @@ export const deleteroom=(req,res)=>{
         (error)=>{
             res.json({message:error});
         }
-    )
+    ) 
+   fs.unlinkSync(path+req.query.image)   
 }

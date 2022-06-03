@@ -8,7 +8,8 @@ const roomschema=new mongoose.Schema({
     roomcapacity:Number,
     roomstatus:String,
     roomprice:Number,
-    ac:Boolean
+    ac:Boolean,
+    image:String
 
 
 })
