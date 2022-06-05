@@ -6,10 +6,10 @@ import router from './Routes/router.js'
 import 'dotenv/config'
 import dotenv from 'dotenv'
 const app = express()
+app.use(cors());
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors())
-app.use(cors({ origin:'https://hosteladmin.herokuapp.com'}))
+
 app.use('/', router)
 dotenv.config()
 const dbport = process.env.DBPORT
