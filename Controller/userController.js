@@ -1,5 +1,4 @@
 import User from '../Model/usermodel.js';
-import _ from 'lodash';
 import jwt from 'jsonwebtoken'; 
 const JWTKEY=""+process.env.REACT_APP_JWTKEY
 export const getallusers=(req,res)=>{
@@ -66,6 +65,11 @@ export const userLogin=async (req,res)=>{
         const isMatch=await User.findOne({email:req.body.email,password:req.body.password});
         if(!isMatch){
            return res.json({message:'Wrong password'});
+        }
+        const isUser = await User.findOne({email:req.body.email,role:'user'});
+        if(isUser){
+            const token=jwt.sign({_id:user._id},JWTKEY);
+            return res.json({token:token,user:user});
         }
         const isAdmin   = await User.findOne({email:req.body.email,role:'admin'});
         if(isAdmin){
