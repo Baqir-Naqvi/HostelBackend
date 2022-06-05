@@ -9,6 +9,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
+app.use(cors({ origin:'https://hosteladmin.herokuapp.com'}))
 app.use('/', router)
 dotenv.config()
 const dbport = process.env.DBPORT
