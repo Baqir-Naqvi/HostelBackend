@@ -40,14 +40,14 @@ var upload = multer({ storage: Storage }).single('file')
 router.get('/', homepage)
 router.get('/roomslist', getroomslists)
 router.get('/roomslist/:id', getrooombyid)
-router.post('/roomslist', auth, admin, upload, addroom) //protected route
-router.post('/addnewuser', auth, admin, adduser)
+router.post('/roomslist', auth, upload, addroom) //protected route
+router.post('/addnewuser', auth, adduser)
 router.put('/roomslist', upload, updateroom) //protect route after user booking
-router.delete('/roomslist', auth, admin, deleteroom) //protected route
-router.get('/users', auth, admin, getallusers) //protected route
-router.get('/users/:id', auth, admin, getuserbyid) //protected route
-router.put('/users/:id', auth, admin, updateuser) //protected route
-router.delete('/users/:id', auth, admin, deleteuser) //protected route
+router.delete('/roomslist', auth, deleteroom) //protected route
+router.get('/users', auth, getallusers) //protected route
+router.get('/users/:id', auth, getuserbyid) //protected route
+router.put('/users/:id', auth, updateuser) //protected route
+router.delete('/users/:id', auth, deleteuser) //protected route
 router.post('/login', userLogin) //protected route
 
 export default router
