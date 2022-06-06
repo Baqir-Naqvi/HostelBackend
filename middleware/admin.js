@@ -5,9 +5,12 @@ function admin_middleware(req, res, next) {
     const decode=jwt.verify(req.header('Authorization'),JWTKEY);
     User.findById(decode._id).then(
         (result)=>{
+            if(result.role)
+            {
             if(result.role=="admin"){
             next()
             }
+        }
             else{
              return res.json({message:"You are not admin"});
             }
